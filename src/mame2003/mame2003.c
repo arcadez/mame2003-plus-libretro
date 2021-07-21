@@ -293,8 +293,8 @@ static void check_system_specs(void)
     * to be implemented by any frontends including RetroArch. The RA developers do not
     * have a suggested range of values. We use 10 by convention (copying other cores).
     */
-   unsigned level = (unsigned)RETRO_PROFILE;
-   environ_cb(RETRO_ENVIRONMENT_SET_PERFORMANCE_LEVEL, &level);
+  unsigned level = (unsigned)RETRO_PROFILE;
+  environ_cb(RETRO_ENVIRONMENT_SET_PERFORMANCE_LEVEL, &level);
 }
 
 
