@@ -802,7 +802,6 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
     else
      info->timing.sample_rate = options.samplerate;
   }
-
 }
 
 
@@ -1124,7 +1123,7 @@ static void set_content_flags(void)
 
 void retro_reset (void)
 {
-    machine_reset(); /* use internal core function */
+  machine_reset();  /* use internal core function */
 }
 
 /* get pointer axis vector from coord */
