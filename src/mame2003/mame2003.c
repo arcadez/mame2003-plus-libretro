@@ -41,7 +41,8 @@ int            usestereo = 1;
 /* comment needed: what does this legacy flag do exactly */
 int legacy_flag = -1;
 
-struct ipd  *default_inputs; /* pointer the array of structs with default MAME input mappings and labels */
+/* pointer to the array of structs with default MAME input mappings and labels */
+struct ipd  *default_inputs;
 
 /* MAME data structures to store and translate keyboard state */
 const struct KeyboardInfo  retroKeys[];
@@ -50,12 +51,12 @@ retro_log_printf_t                         log_cb;
 static struct retro_message                frontend_message;
 
 struct retro_perf_callback                 perf_cb;
-retro_environment_t                        environ_cb       = NULL;
-retro_video_refresh_t                      video_cb         = NULL;
-static retro_input_poll_t                  poll_cb          = NULL;
-static retro_input_state_t                 input_cb         = NULL;
-static retro_audio_sample_batch_t          audio_batch_cb   = NULL;
-retro_set_led_state_t                      led_state_cb     = NULL;
+retro_environment_t                        environ_cb         = NULL;
+retro_video_refresh_t                      video_cb           = NULL;
+static retro_input_poll_t                  poll_cb            = NULL;
+static retro_input_state_t                 input_cb           = NULL;
+static retro_audio_sample_batch_t          audio_batch_cb     = NULL;
+retro_set_led_state_t                      led_state_cb       = NULL;
 struct retro_audio_buffer_status_callback  buf_status_cb;
 
 #ifdef _MSC_VER
@@ -221,9 +222,9 @@ bool retro_audio_buff_underrun      = false;
 
 static void retro_audio_buff_status_cb(bool active, unsigned occupancy, bool underrun_likely)
 {
-   retro_audio_buff_active    = active;
-   retro_audio_buff_occupancy = occupancy;
-   retro_audio_buff_underrun  = underrun_likely;
+  retro_audio_buff_active    = active;
+  retro_audio_buff_occupancy = occupancy;
+  retro_audio_buff_underrun  = underrun_likely;
 }
 
 void retro_set_audio_buff_status_cb(void)
@@ -367,42 +368,42 @@ static void set_variables(bool first_time)
     switch(option_index)
     {
       case OPT_4WAY:
-         if(options.content_flags[CONTENT_JOYSTICK_DIRECTIONS] != 4)
-           continue;
-         break;
+        if(options.content_flags[CONTENT_JOYSTICK_DIRECTIONS] != 4)
+          continue;
+        break;
       case OPT_CROSSHAIR_ENABLED:
-         if(!options.content_flags[CONTENT_LIGHTGUN])
-           continue;
-         break;
+        if(!options.content_flags[CONTENT_LIGHTGUN])
+          continue;
+        break;
       case OPT_STV_BIOS:
-         if(!options.content_flags[CONTENT_STV])
-           continue; /* only offer BIOS selection when it is relevant */
-         break;
+        if(!options.content_flags[CONTENT_STV])
+          continue; /* only offer BIOS selection when it is relevant */
+        break;
       case OPT_NEOGEO_BIOS:
-          if(!options.content_flags[CONTENT_NEOGEO])
-            continue; /* only offer BIOS selection when it is relevant */
-          break;
+        if(!options.content_flags[CONTENT_NEOGEO])
+          continue; /* only offer BIOS selection when it is relevant */
+        break;
       case OPT_USE_ALT_SOUND:
-         if(!options.content_flags[CONTENT_ALT_SOUND])
-           continue;
-         break;
+        if(!options.content_flags[CONTENT_ALT_SOUND])
+          continue;
+        break;
       case OPT_SHARE_DIAL:
-         if(!options.content_flags[CONTENT_DIAL])
-           continue;
-         break;
+        if(!options.content_flags[CONTENT_DIAL])
+          continue;
+        break;
       case OPT_VECTOR_RESOLUTION:
       case OPT_VECTOR_ANTIALIAS:
       case OPT_VECTOR_TRANSLUCENCY:
       case OPT_VECTOR_BEAM:
       case OPT_VECTOR_FLICKER:
       case OPT_VECTOR_INTENSITY:
-         if(!options.content_flags[CONTENT_VECTOR])
-           continue;
-         break;
+        if(!options.content_flags[CONTENT_VECTOR])
+          continue;
+        break;
       case OPT_NVRAM_BOOTSTRAP:
-         if(!options.content_flags[CONTENT_NVRAM_BOOTSTRAP])
-           continue;
-         break;
+        if(!options.content_flags[CONTENT_NVRAM_BOOTSTRAP])
+          continue;
+        break;
 
 
    }
@@ -862,8 +863,8 @@ bool retro_load_game(const struct retro_game_info *game)
   environ_cb(RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY,&options.libretro_system_path);
   if (options.libretro_system_path == NULL || options.libretro_system_path[0] == '\0')
   {
-      log_cb(RETRO_LOG_INFO, LOGPRE "libretro system path not set by frontend, using content path\n");
-      options.libretro_system_path = options.libretro_content_path;
+    log_cb(RETRO_LOG_INFO, LOGPRE "libretro system path not set by frontend, using content path\n");
+    options.libretro_system_path = options.libretro_content_path;
   }
 
   /* Get save directory from frontend */
@@ -871,8 +872,8 @@ bool retro_load_game(const struct retro_game_info *game)
   environ_cb(RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY,&options.libretro_save_path);
   if (options.libretro_save_path == NULL || options.libretro_save_path[0] == '\0')
   {
-      log_cb(RETRO_LOG_INFO,  LOGPRE "libretro save path not set by frontend, using content path\n");
-      options.libretro_save_path = options.libretro_content_path;
+    log_cb(RETRO_LOG_INFO,  LOGPRE "libretro save path not set by frontend, using content path\n");
+    options.libretro_save_path = options.libretro_content_path;
   }
 
   /* Remove trailing slashes for specified systems */
@@ -884,9 +885,7 @@ bool retro_load_game(const struct retro_game_info *game)
   log_cb(RETRO_LOG_INFO, LOGPRE " system path: %s\n", options.libretro_system_path);
   log_cb(RETRO_LOG_INFO, LOGPRE "   save path: %s\n", options.libretro_save_path);
 
-
   init_core_options();
-
   update_variables(true);
 
   configure_cyclone_mode(driverIndex);
@@ -1176,10 +1175,10 @@ void retro_run (void)
 
 void retro_unload_game(void)
 {
-    mame_done();
-    /* do we need to be freeing things here? */
+  mame_done();
+  /* do we need to be freeing things here? */
 
-    free(options.romset_filename_noext);
+  free(options.romset_filename_noext);
 }
 
 void retro_deinit(void)
@@ -1193,7 +1192,7 @@ extern size_t state_get_dump_size(void);
 
 size_t retro_serialize_size(void)
 {
-    return state_get_dump_size();
+  return state_get_dump_size();
 }
 
 bool retro_serialize(void *data, size_t size)
