@@ -1,6 +1,6 @@
 /*********************************************************************
 
-	mame2003.c
+  mame2003.c
 
     an updated port of Xmame 0.78 to the libretro API
 
@@ -199,7 +199,7 @@ struct retro_controller_info input_subdevice_ports[] = {
 
 /******************************************************************************
 
-	frontend message interface
+  frontend message interface
 
 ******************************************************************************/
 
@@ -953,112 +953,112 @@ static void set_content_flags(void)
   /************ INPUT-BASED CONTENT FLAGS ************/
   options.content_flags[CONTENT_JOYSTICK_DIRECTIONS] = 8; /* default behavior is 8-way joystick, even for 2-way games */
 
-	while ((input->type & ~IPF_MASK) != IPT_END)
-	{
-		/* skip analog extension fields */
-		if ((input->type & ~IPF_MASK) != IPT_EXTENSION)
-		{
-			switch (input->type & IPF_PLAYERMASK)
-			{
-				case IPF_PLAYER1:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 1) options.content_flags[CONTENT_PLAYER_COUNT] = 1;
-					break;
-				case IPF_PLAYER2:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 2) options.content_flags[CONTENT_PLAYER_COUNT] = 2;
-					break;
-				case IPF_PLAYER3:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 3) options.content_flags[CONTENT_PLAYER_COUNT] = 3;
-					break;
-				case IPF_PLAYER4:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 4) options.content_flags[CONTENT_PLAYER_COUNT] = 4;
-					break;
-				case IPF_PLAYER5:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 5) options.content_flags[CONTENT_PLAYER_COUNT] = 5;
-					break;
-				case IPF_PLAYER6:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 6) options.content_flags[CONTENT_PLAYER_COUNT] = 6;
-					break;
-				case IPF_PLAYER7:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 7) options.content_flags[CONTENT_PLAYER_COUNT] = 7;
-					break;
-				case IPF_PLAYER8:
-					if (options.content_flags[CONTENT_PLAYER_COUNT] < 8) options.content_flags[CONTENT_PLAYER_COUNT] = 8;
-					break;
-			}
+  while ((input->type & ~IPF_MASK) != IPT_END)
+  {
+    /* skip analog extension fields */
+    if ((input->type & ~IPF_MASK) != IPT_EXTENSION)
+    {
+      switch (input->type & IPF_PLAYERMASK)
+      {
+        case IPF_PLAYER1:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 1) options.content_flags[CONTENT_PLAYER_COUNT] = 1;
+          break;
+        case IPF_PLAYER2:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 2) options.content_flags[CONTENT_PLAYER_COUNT] = 2;
+          break;
+        case IPF_PLAYER3:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 3) options.content_flags[CONTENT_PLAYER_COUNT] = 3;
+          break;
+        case IPF_PLAYER4:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 4) options.content_flags[CONTENT_PLAYER_COUNT] = 4;
+          break;
+        case IPF_PLAYER5:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 5) options.content_flags[CONTENT_PLAYER_COUNT] = 5;
+          break;
+        case IPF_PLAYER6:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 6) options.content_flags[CONTENT_PLAYER_COUNT] = 6;
+          break;
+        case IPF_PLAYER7:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 7) options.content_flags[CONTENT_PLAYER_COUNT] = 7;
+          break;
+        case IPF_PLAYER8:
+          if (options.content_flags[CONTENT_PLAYER_COUNT] < 8) options.content_flags[CONTENT_PLAYER_COUNT] = 8;
+          break;
+      }
 
-			if (input->type & IPF_4WAY) /* the controls use a 4-way joystick */
-				options.content_flags[CONTENT_JOYSTICK_DIRECTIONS] = 4;
+      if (input->type & IPF_4WAY) /* the controls use a 4-way joystick */
+        options.content_flags[CONTENT_JOYSTICK_DIRECTIONS] = 4;
 
-			switch (input->type & ~IPF_MASK)
-			{
-				case IPT_JOYSTICKRIGHT_UP:
-				case IPT_JOYSTICKRIGHT_DOWN:
-				case IPT_JOYSTICKRIGHT_LEFT:
-				case IPT_JOYSTICKRIGHT_RIGHT:
-				case IPT_JOYSTICKLEFT_UP:
-				case IPT_JOYSTICKLEFT_DOWN:
-				case IPT_JOYSTICKLEFT_LEFT:
-				case IPT_JOYSTICKLEFT_RIGHT:
-					options.content_flags[CONTENT_DUAL_JOYSTICK] = true;
-					break;
-				case IPT_BUTTON1:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 1) options.content_flags[CONTENT_BUTTON_COUNT] = 1;
-					break;
-				case IPT_BUTTON2:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 2) options.content_flags[CONTENT_BUTTON_COUNT] = 2;
-					break;
-				case IPT_BUTTON3:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 3) options.content_flags[CONTENT_BUTTON_COUNT] = 3;
-					break;
-				case IPT_BUTTON4:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 4) options.content_flags[CONTENT_BUTTON_COUNT] = 4;
-					break;
-				case IPT_BUTTON5:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 5) options.content_flags[CONTENT_BUTTON_COUNT] = 5;
-					break;
-				case IPT_BUTTON6:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] <6 ) options.content_flags[CONTENT_BUTTON_COUNT] = 6;
-					break;
-				case IPT_BUTTON7:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 7) options.content_flags[CONTENT_BUTTON_COUNT] = 7;
-					break;
-				case IPT_BUTTON8:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 8) options.content_flags[CONTENT_BUTTON_COUNT] = 8;
-					break;
-				case IPT_BUTTON9:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 9) options.content_flags[CONTENT_BUTTON_COUNT] = 9;
-					break;
-				case IPT_BUTTON10:
-					if (options.content_flags[CONTENT_BUTTON_COUNT] < 10) options.content_flags[CONTENT_BUTTON_COUNT] = 10;
-					break;
-				case IPT_PADDLE:
-					options.content_flags[CONTENT_PADDLE] = true;
-					break;
-				case IPT_DIAL:
-					options.content_flags[CONTENT_DIAL] = true;
-					break;
-				case IPT_TRACKBALL_X:
-				case IPT_TRACKBALL_Y:
-					options.content_flags[CONTENT_TRACKBALL] = true;
-					break;
-				case IPT_AD_STICK_X:
-				case IPT_AD_STICK_Y:
-					options.content_flags[CONTENT_AD_STICK] = true;
-					break;
-				case IPT_LIGHTGUN_X:
-				case IPT_LIGHTGUN_Y:
-					options.content_flags[CONTENT_LIGHTGUN] = true;
-					break;
-				case IPT_SERVICE :
-					options.content_flags[CONTENT_HAS_SERVICE] = true;
-					break;
-				case IPT_TILT :
-					options.content_flags[CONTENT_HAS_TILT] = true;
-					break;
-			}
-		}
-		++input;
-	}
+      switch (input->type & ~IPF_MASK)
+      {
+        case IPT_JOYSTICKRIGHT_UP:
+        case IPT_JOYSTICKRIGHT_DOWN:
+        case IPT_JOYSTICKRIGHT_LEFT:
+        case IPT_JOYSTICKRIGHT_RIGHT:
+        case IPT_JOYSTICKLEFT_UP:
+        case IPT_JOYSTICKLEFT_DOWN:
+        case IPT_JOYSTICKLEFT_LEFT:
+        case IPT_JOYSTICKLEFT_RIGHT:
+          options.content_flags[CONTENT_DUAL_JOYSTICK] = true;
+          break;
+        case IPT_BUTTON1:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 1) options.content_flags[CONTENT_BUTTON_COUNT] = 1;
+          break;
+        case IPT_BUTTON2:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 2) options.content_flags[CONTENT_BUTTON_COUNT] = 2;
+          break;
+        case IPT_BUTTON3:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 3) options.content_flags[CONTENT_BUTTON_COUNT] = 3;
+          break;
+        case IPT_BUTTON4:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 4) options.content_flags[CONTENT_BUTTON_COUNT] = 4;
+          break;
+        case IPT_BUTTON5:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 5) options.content_flags[CONTENT_BUTTON_COUNT] = 5;
+          break;
+        case IPT_BUTTON6:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] <6 ) options.content_flags[CONTENT_BUTTON_COUNT] = 6;
+          break;
+        case IPT_BUTTON7:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 7) options.content_flags[CONTENT_BUTTON_COUNT] = 7;
+          break;
+        case IPT_BUTTON8:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 8) options.content_flags[CONTENT_BUTTON_COUNT] = 8;
+          break;
+        case IPT_BUTTON9:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 9) options.content_flags[CONTENT_BUTTON_COUNT] = 9;
+          break;
+        case IPT_BUTTON10:
+          if (options.content_flags[CONTENT_BUTTON_COUNT] < 10) options.content_flags[CONTENT_BUTTON_COUNT] = 10;
+          break;
+        case IPT_PADDLE:
+          options.content_flags[CONTENT_PADDLE] = true;
+          break;
+        case IPT_DIAL:
+          options.content_flags[CONTENT_DIAL] = true;
+          break;
+        case IPT_TRACKBALL_X:
+        case IPT_TRACKBALL_Y:
+          options.content_flags[CONTENT_TRACKBALL] = true;
+          break;
+        case IPT_AD_STICK_X:
+        case IPT_AD_STICK_Y:
+          options.content_flags[CONTENT_AD_STICK] = true;
+          break;
+        case IPT_LIGHTGUN_X:
+        case IPT_LIGHTGUN_Y:
+          options.content_flags[CONTENT_LIGHTGUN] = true;
+          break;
+        case IPT_SERVICE :
+          options.content_flags[CONTENT_HAS_SERVICE] = true;
+          break;
+        case IPT_TILT :
+          options.content_flags[CONTENT_HAS_TILT] = true;
+          break;
+      }
+    }
+    ++input;
+  }
 
   /************ DRIVERS FLAGGED IN CONTROLS.C WITH ALTERNATING CONTROLS ************/
   if(game_driver->ctrl_dat->alternating_controls)
@@ -1202,49 +1202,49 @@ size_t retro_serialize_size(void)
 bool retro_serialize(void *data, size_t size)
 {
    int cpunum;
-	if(  retro_serialize_size() == size  && size   )
-	{
-		/* write the save state */
-		state_save_save_begin(data);
+  if(  retro_serialize_size() == size  && size   )
+  {
+    /* write the save state */
+    state_save_save_begin(data);
 
-		/* write tag 0 */
-		state_save_set_current_tag(0);
-		if(state_save_save_continue())
-		{
-		    return false;
-		}
+    /* write tag 0 */
+    state_save_set_current_tag(0);
+    if(state_save_save_continue())
+    {
+        return false;
+    }
 
-		/* loop over CPUs */
-		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
-		{
-			cpuintrf_push_context(cpunum);
+    /* loop over CPUs */
+    for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
+    {
+      cpuintrf_push_context(cpunum);
 
-			/* make sure banking is set */
-			activecpu_reset_banking();
+      /* make sure banking is set */
+      activecpu_reset_banking();
 
-			/* save the CPU data */
-			state_save_set_current_tag(cpunum + 1);
-			if(state_save_save_continue())
-			    return false;
+      /* save the CPU data */
+      state_save_set_current_tag(cpunum + 1);
+      if(state_save_save_continue())
+          return false;
 
-			cpuintrf_pop_context();
-		}
+      cpuintrf_pop_context();
+    }
 
-		/* finish and close */
-		state_save_save_finish();
+    /* finish and close */
+    state_save_save_finish();
 
-		return true;
-	}
+    return true;
+  }
 
-	return false;
+  return false;
 }
 
 bool retro_unserialize(const void * data, size_t size)
 {
     int cpunum;
-	/* if successful, load it */
-	if ( (retro_serialize_size() ) && ( data ) && ( size ) && ( !state_save_load_begin((void*)data, size) ) )
-	{
+  /* if successful, load it */
+  if ( (retro_serialize_size() ) && ( data ) && ( size ) && ( !state_save_load_begin((void*)data, size) ) )
+  {
         /* read tag 0 */
         state_save_set_current_tag(0);
         if(state_save_load_continue())
@@ -1271,9 +1271,9 @@ bool retro_unserialize(const void * data, size_t size)
 
 
         return true;
-	}
+  }
 
-	return false;
+  return false;
 }
 
 /******************************************************************************
@@ -1338,46 +1338,46 @@ int osd_start_audio_stream(int stereo)
 
 int osd_update_audio_stream(INT16 *buffer)
 {
-	int i,j;
-	if ( Machine->sample_rate !=0 && buffer )
-	{
-		memcpy(samples_buffer, buffer, samples_per_frame * (usestereo ? 4 : 2));
-		if (usestereo)
-			audio_batch_cb(samples_buffer, samples_per_frame);
-		else
-		{
-			for (i = 0, j = 0; i < samples_per_frame; i++)
-			{
-				conversion_buffer[j++] = samples_buffer[i];
-				conversion_buffer[j++] = samples_buffer[i];
-			}
-			audio_batch_cb(conversion_buffer,samples_per_frame);
-		}
+  int i,j;
+  if ( Machine->sample_rate !=0 && buffer )
+  {
+    memcpy(samples_buffer, buffer, samples_per_frame * (usestereo ? 4 : 2));
+    if (usestereo)
+      audio_batch_cb(samples_buffer, samples_per_frame);
+    else
+    {
+      for (i = 0, j = 0; i < samples_per_frame; i++)
+      {
+        conversion_buffer[j++] = samples_buffer[i];
+        conversion_buffer[j++] = samples_buffer[i];
+      }
+      audio_batch_cb(conversion_buffer,samples_per_frame);
+    }
 
 
-		//process next frame
+    //process next frame
 
-		if ( samples_per_frame  != orig_samples_per_frame ) samples_per_frame = orig_samples_per_frame;
+    if ( samples_per_frame  != orig_samples_per_frame ) samples_per_frame = orig_samples_per_frame;
 
-		// dont drop any sample frames some games like mk will drift with time
+    // dont drop any sample frames some games like mk will drift with time
 
-		delta_samples += (Machine->sample_rate / Machine->drv->frames_per_second) - orig_samples_per_frame;
-		if ( delta_samples >= 1.0f )
-		{
+    delta_samples += (Machine->sample_rate / Machine->drv->frames_per_second) - orig_samples_per_frame;
+    if ( delta_samples >= 1.0f )
+    {
 
-			int integer_delta = (int)delta_samples;
-			if (integer_delta <= 16 )
-			{
-				log_cb(RETRO_LOG_DEBUG,"sound: Delta added value %d added to frame\n",integer_delta);
-				samples_per_frame += integer_delta;
-			}
-			else if(integer_delta >= 16) log_cb(RETRO_LOG_INFO, "sound: Delta not added to samples_per_frame too large integer_delta:%d\n", integer_delta);
-			else log_cb(RETRO_LOG_DEBUG,"sound(delta) no contitions met\n");
-			delta_samples -= integer_delta;
+      int integer_delta = (int)delta_samples;
+      if (integer_delta <= 16 )
+      {
+        log_cb(RETRO_LOG_DEBUG,"sound: Delta added value %d added to frame\n",integer_delta);
+        samples_per_frame += integer_delta;
+      }
+      else if(integer_delta >= 16) log_cb(RETRO_LOG_INFO, "sound: Delta not added to samples_per_frame too large integer_delta:%d\n", integer_delta);
+      else log_cb(RETRO_LOG_DEBUG,"sound(delta) no contitions met\n");
+      delta_samples -= integer_delta;
 
-		}
-	}
-	return samples_per_frame;
+    }
+  }
+  return samples_per_frame;
 }
 
 
@@ -1408,7 +1408,7 @@ void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
 
 /******************************************************************************
 
-	RetroPad mapping
+  RetroPad mapping
 
 ******************************************************************************/
 
@@ -1803,7 +1803,7 @@ unsigned get_ctrl_ipt_code(unsigned player_number, unsigned standard_code)
  * {
  *   const char *name;        // OS dependant name; 0 terminates the list
  *   unsigned code;           // OS dependant code
- *   InputCode standardcode;	// CODE_xxx equivalent from list in input.h, or CODE_OTHER if n/a
+ *   InputCode standardcode;  // CODE_xxx equivalent from list in input.h, or CODE_OTHER if n/a
  * };
  *
  * In the context of MAME 2003+, the 'OS' is the libretro, so we determine the unique codes for
@@ -1926,7 +1926,7 @@ struct JoystickInfo alternate_joystick_maps[MAX_PLAYER_COUNT][IDX_NUMBER_OF_INPU
 
 /******************************************************************************
 
-	Joystick
+  Joystick
 
 ******************************************************************************/
 
@@ -2113,37 +2113,37 @@ void osd_analogjoy_read(int player, int analog_axis[MAX_ANALOG_AXES], InputCode 
 
 int analog_deadzone_rescale(int input)
 {
-	static const int TRIGGER_MAX = 0x8000;
-	int neg_test=0;
-	float scale;
-	int trigger_deadzone;
+  static const int TRIGGER_MAX = 0x8000;
+  int neg_test=0;
+  float scale;
+  int trigger_deadzone;
 
-	trigger_deadzone = (32678 * options.deadzone) / 100;
+  trigger_deadzone = (32678 * options.deadzone) / 100;
 
-	if (input < 0) { input =abs(input); neg_test=1; }
-	scale = ((float)TRIGGER_MAX/(float)(TRIGGER_MAX - trigger_deadzone));
+  if (input < 0) { input =abs(input); neg_test=1; }
+  scale = ((float)TRIGGER_MAX/(float)(TRIGGER_MAX - trigger_deadzone));
 
-	if ( input > 0 && input > trigger_deadzone )
-	{
-		// Re-scale analog range
-		float scaled = (input - trigger_deadzone)*scale;
-		input = round(scaled);
+  if ( input > 0 && input > trigger_deadzone )
+  {
+    // Re-scale analog range
+    float scaled = (input - trigger_deadzone)*scale;
+    input = round(scaled);
 
-		if (input > +32767)
-		{
-			input = +32767;
-		}
-		input = input / 327.68;
-	}
+    if (input > +32767)
+    {
+      input = +32767;
+    }
+    input = input / 327.68;
+  }
 
-	else
-	{
-		input = 0;
-	}
+  else
+  {
+    input = 0;
+  }
 
 
-	if (neg_test) input =-abs(input);
-	return (int) input * 1.28;
+  if (neg_test) input =-abs(input);
+  return (int) input * 1.28;
 }
 
 /******************************************************************************
@@ -2175,7 +2175,7 @@ void osd_joystick_end_calibration(void) { }
 
 /******************************************************************************
 
-	Trackball, Spinner, Mouse, Pointer, Lightgun
+  Trackball, Spinner, Mouse, Pointer, Lightgun
 
 ******************************************************************************/
 
@@ -2242,7 +2242,7 @@ int rescale_analog(int libretro_coordinate)
 
 /******************************************************************************
 
-	Keyboard
+  Keyboard
 
 ******************************************************************************/
 
@@ -2273,7 +2273,7 @@ int osd_readkey_unicode(int flush)
 
 /******************************************************************************
 
-	Keymapping
+  Keymapping
 
 ******************************************************************************/
 
@@ -2287,11 +2287,11 @@ int osd_readkey_unicode(int flush)
  *  {
  *    const char *name;       // OS dependant name; 0 terminates the list
  *    unsigned code;          // OS dependant code
- *    InputCode standardcode;	// CODE_xxx equivalent from list below, or CODE_OTHER if n/a
+ *    InputCode standardcode;  // CODE_xxx equivalent from list below, or CODE_OTHER if n/a
  * };
  *
  * Unassigned keycodes
- *	KEYCODE_OPENBRACE, KEYCODE_CLOSEBRACE, KEYCODE_BACKSLASH2, KEYCODE_STOP, KEYCODE_LWIN,
+ *  KEYCODE_OPENBRACE, KEYCODE_CLOSEBRACE, KEYCODE_BACKSLASH2, KEYCODE_STOP, KEYCODE_LWIN,
  *  KEYCODE_RWIN, KEYCODE_DEL_PAD, KEYCODE_PAUSE
  *
  * The format for each systems key constants is RETROK_$(TAG) and KEYCODE_$(TAG)
@@ -2398,7 +2398,7 @@ const struct KeyboardInfo retroKeys[] =
 
 /******************************************************************************
 
-	Utility functions
+  Utility functions
 
 ******************************************************************************/
 
