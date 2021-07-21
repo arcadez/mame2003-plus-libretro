@@ -2,7 +2,7 @@
 
   mame2003.c
 
-    an updated port of Xmame 0.78 to the libretro API
+  an updated port of Xmame 0.78 to the libretro API
 
 *********************************************************************/
 
@@ -33,7 +33,7 @@ int            retro_running = 0;
 int            gotFrame;
 static float   delta_samples;
 int            samples_per_frame = 0;
-int            orig_samples_per_frame =0;
+int            orig_samples_per_frame = 0;
 short*         samples_buffer;
 short*         conversion_buffer;
 int            usestereo = 1;
@@ -43,20 +43,20 @@ int legacy_flag = -1;
 
 struct ipd  *default_inputs; /* pointer the array of structs with default MAME input mappings and labels */
 
-/* data structures to store and translate keyboard state */
-const struct KeyboardInfo  retroKeys[]; /* MAME data structure keymapping */
+/* MAME data structures to store and translate keyboard state */
+const struct KeyboardInfo  retroKeys[];
 
-retro_log_printf_t                 log_cb;
-static struct retro_message        frontend_message;
+retro_log_printf_t                         log_cb;
+static struct retro_message                frontend_message;
 
-struct                             retro_perf_callback perf_cb;
-retro_environment_t                environ_cb                    = NULL;
-retro_video_refresh_t              video_cb                      = NULL;
-static retro_input_poll_t          poll_cb                       = NULL;
-static retro_input_state_t         input_cb                      = NULL;
-static retro_audio_sample_batch_t  audio_batch_cb                = NULL;
-retro_set_led_state_t              led_state_cb                  = NULL;
-struct retro_audio_buffer_status_callback buf_status_cb;
+struct                                     retro_perf_callback perf_cb;
+retro_environment_t                        environ_cb                    = NULL;
+retro_video_refresh_t                      video_cb                      = NULL;
+static retro_input_poll_t                  poll_cb                       = NULL;
+static retro_input_state_t                 input_cb                      = NULL;
+static retro_audio_sample_batch_t          audio_batch_cb                = NULL;
+retro_set_led_state_t                      led_state_cb                  = NULL;
+struct retro_audio_buffer_status_callback  buf_status_cb;
 
 #ifdef _MSC_VER
 #if _MSC_VER < 1800
@@ -69,11 +69,11 @@ double round(double number)
 
 /******************************************************************************
 
-Core options
+  Core options
 
 ******************************************************************************/
 
-enum CORE_OPTIONS/* controls the order in which core options appear. common, important, and content-specific options should go earlier on the list */
+enum CORE_OPTIONS  /* controls the order in which core options appear. common, important, and content-specific options should go earlier on the list */
 {
   OPT_4WAY = 0,
   OPT_MOUSE_DEVICE,
@@ -112,10 +112,10 @@ enum CORE_OPTIONS/* controls the order in which core options appear. common, imp
 #if (HAS_CYCLONE || HAS_DRZ80)
   OPT_CYCLONE_MODE,
 #endif
-  OPT_end /* dummy last entry */
+  OPT_end  /* dummy last entry */
 };
 
-static struct retro_variable_default  default_options[OPT_end + 1];    /* need the plus one for the NULL entries at the end */
+static struct retro_variable_default  default_options[OPT_end + 1];  /* need the plus one for the NULL entries at the end */
 static struct retro_variable          current_options[OPT_end + 1];
 
 
@@ -157,10 +157,10 @@ extern void mame2003_video_get_geometry(struct retro_game_geometry *geom);
 
 
 /******************************************************************************
- *
- * Data structures for libretro controllers
- *
- ******************************************************************************/
+
+  Data structures for libretro controllers
+
+*******************************************************************************/
 
 /* the first of our controllers can use the base retropad type and rename it,
  * while any layout variations must subclass the type.
@@ -228,25 +228,22 @@ static void retro_audio_buff_status_cb(bool active, unsigned occupancy, bool und
 
 void retro_set_audio_buff_status_cb(void)
 {
-  if (options.frameskip >0 && options.frameskip >= 12)
+  if (options.frameskip > 0 && options.frameskip >= 12)
   {
+    if (!environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, &buf_status_cb))
+    {
+      if (log_cb)
+        log_cb(RETRO_LOG_WARN, "Frameskip disabled - frontend does not support audio buffer status monitoring.\n");
 
-      if (!environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK,
-            &buf_status_cb))
-      {
-         if (log_cb)
-            log_cb(RETRO_LOG_WARN, "Frameskip disabled - frontend does not support audio buffer status monitoring.\n");
-
-         retro_audio_buff_active    = false;
-         retro_audio_buff_occupancy = 0;
-         retro_audio_buff_underrun  = false;
-      }
-      else
+       retro_audio_buff_active    = false;
+       retro_audio_buff_occupancy = 0;
+       retro_audio_buff_underrun  = false;
+    }
+    else
       log_cb(RETRO_LOG_INFO, "Frameskip Enabled\n");
   }
-   else
-      environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK,NULL);
-
+  else
+    environ_cb(RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK,NULL);
 }
 
 unsigned retro_api_version(void)
@@ -257,8 +254,8 @@ unsigned retro_api_version(void)
 
 void retro_get_system_info(struct retro_system_info *info)
 {
-   /* this must match the 'corename' field in mame2003_plus_libretro.info
-    * in order for netplay to work. */
+  /* this must match the 'corename' field in mame2003_plus_libretro.info
+   * in order for netplay to work. */
   info->library_name = "MAME 2003-Plus";
 #ifndef GIT_VERSION
 #define GIT_VERSION ""
@@ -1201,7 +1198,7 @@ size_t retro_serialize_size(void)
 
 bool retro_serialize(void *data, size_t size)
 {
-   int cpunum;
+  int cpunum;
   if(  retro_serialize_size() == size  && size   )
   {
     /* write the save state */
@@ -1241,7 +1238,7 @@ bool retro_serialize(void *data, size_t size)
 
 bool retro_unserialize(const void * data, size_t size)
 {
-    int cpunum;
+  int cpunum;
   /* if successful, load it */
   if ( (retro_serialize_size() ) && ( data ) && ( size ) && ( !state_save_load_begin((void*)data, size) ) )
   {
